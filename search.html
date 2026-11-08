@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Search | Social Design</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F1F3F9; --surface:#FFFFFF; --ink:#141B34; --muted:#5A6283; --line:#D3D8E8;
+  --cobalt:#2E48F5; --pink:#FF7EB6; --sun:#FFC933; --mint:#33C9A0;
+  --on-cobalt:#FFFFFF; --hl:#FFE98A;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--on-cobalt:#0D1226;--hl:#6B5A10}
+}
+:root[data-theme="dark"]{--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--on-cobalt:#0D1226;--hl:#6B5A10}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+h1{font:800 clamp(34px,5vw,52px)/1.05 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;margin:0}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+
+nav{background:var(--surface);border-bottom:1.5px solid var(--line)}
+nav .in{max-width:1080px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif}
+.links{display:flex;gap:20px}
+.links a{color:var(--muted)}
+.links a[aria-current]{color:var(--ink);font-weight:700}
+
+.top{padding:44px 0 16px}
+.top p{color:var(--muted);margin:10px 0 24px}
+.box{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:0 6px 0 16px;transition:border-color .15s}
+.box:focus-within{border-color:var(--cobalt);outline:3px solid color-mix(in srgb,var(--cobalt) 25%,transparent)}
+.box svg{flex:none;color:var(--muted)}
+.box input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:500 18px "DM Sans",sans-serif;padding:16px 12px;outline:none}
+.clr{border:0;background:transparent;color:var(--muted);font-size:26px;line-height:1;cursor:pointer;min-width:44px;min-height:44px;visibility:hidden}
+.clr.show{visibility:visible}
+
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px}
+.tab{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;font:500 15px "DM Sans",sans-serif;padding:8px 16px;cursor:pointer;min-height:44px}
+.tab[aria-pressed=true]{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt);font-weight:700}
+.tab small{opacity:.8;margin-left:4px}
+
+.status{color:var(--muted);margin:14px 0 10px;min-height:24px}
+.list{display:flex;flex-direction:column;gap:10px;padding-bottom:64px}
+.row{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;transition:border-color .15s,transform .1s}
+.row:hover{border-color:var(--cobalt)}
+.vis{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;font:800 16px "Bricolage Grotesque",sans-serif;color:#141B34}
+.vis.sq{border-radius:12px}
+.txt{flex:1;min-width:0}
+.txt b{display:block;font-size:17px;line-height:1.3}
+.txt span{color:var(--muted);font-size:14px}
+.tag{flex:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt);border:1.5px solid var(--cobalt);border-radius:99px;padding:2px 10px}
+mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 1px}
+
+.suggest{padding:8px 0 64px}
+.suggest h2{font:700 15px "DM Sans",sans-serif;color:var(--muted);margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;font:500 15px "DM Sans",sans-serif;padding:8px 16px;cursor:pointer;min-height:44px}
+.pill:hover{border-color:var(--cobalt)}
+@media (max-width:540px){.tag{display:none}.links{gap:14px}}
+input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;appearance:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="in">
+    <a class="logo" href="product.html">Social Design</a>
+    <div class="links"><a href="profile.html">Profile</a><a href="shop.html">Shop</a><a href="search.html" aria-current="page">Search</a></div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="top">
+    <h1>Search</h1>
+    <p>Find designers, projects and products.</p>
+    <form class="box" role="search" id="form" autocomplete="off">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Try “icons” or “branding”" aria-label="Search Social Design" enterkeyhint="search">
+      <button class="clr" id="clr" type="button" aria-label="Clear search">×</button>
+    </form>
+    <div class="tabs" id="tabs" role="group" aria-label="Filter results" hidden></div>
+  </header>
+
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+  <div class="list" id="list"></div>
+
+  <section class="suggest" id="suggest">
+    <h2>Popular searches</h2>
+    <div class="pills" id="pills"></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const C = {pink:'#FF7EB6', sun:'#FFC933', mint:'#33C9A0', blue:'#6F83FF', ink:'#141B34'};
+
+// Sample data: replace with your real designers, projects and products
+const data = [
+  {type:'Designers', title:'Maya Rao',        sub:'UI/UX designer',        tags:'ui ux app mobile research',        href:'profile.html', color:C.sun},
+  {type:'Designers', title:'Arjun Mehta',     sub:'Brand designer',        tags:'branding logo identity',            href:'profile.html', color:C.pink},
+  {type:'Designers', title:'Lena Park',       sub:'Illustrator',           tags:'illustration art books drawing',    href:'profile.html', color:C.mint},
+  {type:'Designers', title:'Omar Haddad',     sub:'Motion designer',       tags:'motion animation video logo',       href:'profile.html', color:C.blue},
+  {type:'Designers', title:'Sofia Reyes',     sub:'Product designer',      tags:'product ux design systems',         href:'profile.html', color:C.pink},
+  {type:'Designers', title:'Kenji Sato',      sub:'Type designer',         tags:'fonts typography lettering',        href:'profile.html', color:C.sun},
+  {type:'Projects',  title:'Mindful habit tracker', sub:'Mobile app by Maya Rao',   tags:'ui app mobile wellness',      href:'profile.html', color:C.blue},
+  {type:'Projects',  title:'Bloom plant shop',      sub:'Branding by Arjun Mehta',  tags:'branding logo shop plants',   href:'profile.html', color:C.mint},
+  {type:'Projects',  title:'Transit map redesign',  sub:'Web design by Maya Rao',   tags:'web map ui city',             href:'profile.html', color:C.sun},
+  {type:'Projects',  title:'Wellness onboarding',   sub:'UX flow by Sofia Reyes',   tags:'ux flow onboarding app',      href:'profile.html', color:C.pink},
+  {type:'Projects',  title:'Folk tales book',       sub:'Illustration by Lena Park',tags:'illustration book art',       href:'profile.html', color:C.mint},
+  {type:'Projects',  title:'Logo animations',       sub:'Motion by Omar Haddad',    tags:'motion logo animation',       href:'profile.html', color:C.blue},
+  {type:'Products',  title:'Nova UI Kit',           sub:'UI kit · $49',             tags:'ui kit components',           href:'shop.html', color:C.blue},
+  {type:'Products',  title:'Fintech App Screens',   sub:'UI kit · $39',             tags:'ui kit app finance',          href:'shop.html', color:C.mint},
+  {type:'Products',  title:'Portfolio Template',    sub:'Template · $29',           tags:'template portfolio website',  href:'shop.html', color:C.sun},
+  {type:'Products',  title:'Pitch Deck Pack',       sub:'Template · $35',           tags:'template slides presentation',href:'shop.html', color:C.pink},
+  {type:'Products',  title:'Line Icon Set',         sub:'Icons · $19',              tags:'icons icon line',             href:'shop.html', color:C.ink},
+  {type:'Products',  title:'Duotone Icons',         sub:'Icons · $24',              tags:'icons icon duotone',          href:'shop.html', color:C.blue},
+  {type:'Products',  title:'Grotesk Display Font',  sub:'Font · $29',               tags:'font typography type',        href:'shop.html', color:C.sun},
+  {type:'Products',  title:'Design Systems Course', sub:'Course · $59',             tags:'course learn design systems', href:'shop.html', color:C.blue}
+];
+const suggestions = ['UI design', 'Icons', 'Branding', 'Motion', 'Templates', 'Fonts'];
+const kinds = ['All', 'Designers', 'Projects', 'Products'];
+let kind = 'All';
+
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function mark(text, words){
+  let out = esc(text);
+  words.forEach(w => { out = out.replace(new RegExp('(' + reEsc(esc(w)) + ')(?![^<]*>)', 'gi'), '<mark>$1</mark>'); });
+  return out;
+}
+function initials(n){ return n.split(' ').map(w => w[0]).join('').slice(0, 2); }
+
+function match(q){
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length) return {words, hits:[]};
+  const hits = data.map(d => {
+    const name = d.title.toLowerCase(), rest = (d.sub + ' ' + d.tags).toLowerCase();
+    let score = 0;
+    for (const w of words){
+      if (name.includes(w)) score += name.startsWith(w) ? 3 : 2;
+      else if (rest.includes(w)) score += 1;
+      else return null; // every word must match
+    }
+    return {d, score};
+  }).filter(Boolean).sort((a, b) => b.score - a.score).map(x => x.d);
+  return {words, hits};
+}
+
+function render(){
+  const q = $('q').value.trim();
+  $('clr').classList.toggle('show', !!$('q').value);
+  const {words, hits} = match(q);
+  $('tabs').hidden = !q;
+  $('suggest').style.display = q ? 'none' : '';
+  if (!q){ $('list').innerHTML = ''; $('status').textContent = ''; return; }
+
+  $('tabs').innerHTML = kinds.map(k => {
+    const n = k === 'All' ? hits.length : hits.filter(h => h.type === k).length;
+    return `<button class="tab" type="button" aria-pressed="${k === kind}" data-k="${k}">${k}<small>${n}</small></button>`;
+  }).join('');
+
+  const shown = hits.filter(h => kind === 'All' || h.type === kind);
+  $('status').textContent = shown.length
+    ? `${shown.length} result${shown.length === 1 ? '' : 's'} for “${q}”`
+    : `No results for “${q}”. Try a shorter word or a different category.`;
+  $('list').innerHTML = shown.map(h => {
+    const person = h.type === 'Designers';
+    return `<a class="row" href="${h.href}">
+      <span class="vis ${person ? '' : 'sq'}" style="background:${h.color};${h.color === C.ink ? 'color:#fff' : ''}" aria-hidden="true">${person ? initials(h.title) : ''}</span>
+      <span class="txt"><b>${mark(h.title, words)}</b><span>${mark(h.sub, words)}</span></span>
+      <span class="tag">${h.type.slice(0, -1)}</span></a>`;
+  }).join('');
+}
+
+$('q').addEventListener('input', () => { kind = 'All'; render(); });
+$('form').addEventListener('submit', e => { e.preventDefault(); $('q').blur(); });
+$('clr').onclick = () => { $('q').value = ''; kind = 'All'; render(); $('q').focus(); };
+$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  kind = b.dataset.k; render();
+});
+$('pills').innerHTML = suggestions.map(s => `<button class="pill" type="button">${s}</button>`).join('');
+$('pills').addEventListener('click', e => {
+  const b = e.target.closest('.pill'); if (!b) return;
+  $('q').value = b.textContent; kind = 'All'; render(); $('q').focus();
+});
+
+// On your own site, links like search.html?q=icons will pre-fill the search
+try { const p = new URLSearchParams(location.search).get('q'); if (p) $('q').value = p; } catch(e) {}
+render();
+</script>
+</body>
+</html>
