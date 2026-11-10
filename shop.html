@@ -7,21 +7,21 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
 :root{
-  --bg:#F1F3F9; --surface:#FFFFFF; --ink:#141B34; --muted:#5A6283; --line:#D3D8E8;
-  --cobalt:#2E48F5; --pink:#FF7EB6; --sun:#FFC933; --mint:#33C9A0; --err:#C9254A;
-  --on-cobalt:#FFFFFF;
+  --bg:#F5F8F3; --surface:#FFFFFF; --ink:#16251F; --muted:#586861; --line:#D6E0D9;
+  --brand:#1E7A5A; --coral:#F28B6B; --sun:#F6C85F; --sage:#A8D8BC; --err:#B3261E;
+  --on-brand:#FFFFFF;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--err:#FF7B97;--on-cobalt:#0D1226}
+  :root:not([data-theme="light"]){--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--err:#FF8A80;--on-brand:#0E1A15}
 }
-:root[data-theme="dark"]{--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--err:#FF7B97;--on-cobalt:#0D1226}
+:root[data-theme="dark"]{--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--err:#FF8A80;--on-brand:#0E1A15}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
-a{color:var(--cobalt);font-weight:500}
-a:focus-visible,button:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+a{color:var(--brand);font-weight:500}
+a:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;margin:0}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
@@ -32,8 +32,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .links{display:flex;gap:20px;align-items:center}
 .links a.l{color:var(--muted);text-decoration:none}
 .links a[aria-current]{color:var(--ink);font-weight:700}
-.cartbtn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--cobalt);background:transparent;color:var(--cobalt);border-radius:10px;font:700 15px "DM Sans",sans-serif;padding:8px 14px;min-height:44px;cursor:pointer}
-.cartbtn b{background:var(--cobalt);color:var(--on-cobalt);border-radius:99px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:13px;padding:0 6px}
+.cartbtn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--brand);background:transparent;color:var(--brand);border-radius:10px;font:700 15px "DM Sans",sans-serif;padding:8px 14px;min-height:44px;cursor:pointer}
+.cartbtn b{background:var(--brand);color:var(--on-brand);border-radius:99px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:13px;padding:0 6px}
 
 /* Header + filters */
 .top{padding:40px 0 20px}
@@ -41,7 +41,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .top p{color:var(--muted);margin:10px 0 0;max-width:50ch}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
 .chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;font:500 15px "DM Sans",sans-serif;padding:8px 18px;cursor:pointer;min-height:44px}
-.chip[aria-pressed=true]{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt);font-weight:700}
+.chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:var(--on-brand);font-weight:700}
 
 /* Grid */
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-bottom:64px}
@@ -59,8 +59,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .info h3{font-size:18px;font-weight:800;line-height:1.2}
 .buy{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px}
 .price{font:800 20px "Bricolage Grotesque",sans-serif}
-.add{border:0;border-radius:10px;background:var(--cobalt);color:var(--on-cobalt);font:700 14px "DM Sans",sans-serif;padding:10px 16px;min-height:44px;cursor:pointer}
-.add.done{background:var(--mint);color:#0D1226}
+.add{border:0;border-radius:10px;background:var(--brand);color:var(--on-brand);font:700 14px "DM Sans",sans-serif;padding:10px 16px;min-height:44px;cursor:pointer}
+.add.done{background:var(--sage);color:#0E1A15}
 .empty{display:none;color:var(--muted);padding:20px 0 64px}
 
 /* Cart drawer */
@@ -83,7 +83,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .lt{font-weight:700;text-align:right}
 .df{padding:18px 20px;border-top:1.5px solid var(--line);background:var(--surface)}
 .sum{display:flex;justify-content:space-between;font:800 22px "Bricolage Grotesque",sans-serif;margin-bottom:12px}
-.co{width:100%;border:0;border-radius:10px;background:var(--cobalt);color:var(--on-cobalt);font:700 16px "DM Sans",sans-serif;padding:14px;cursor:pointer;min-height:48px}
+.co{width:100%;border:0;border-radius:10px;background:var(--brand);color:var(--on-brand);font:700 16px "DM Sans",sans-serif;padding:14px;cursor:pointer;min-height:48px}
 .co:disabled{opacity:.45;cursor:not-allowed}
 .note{color:var(--muted);font-size:14px;margin:10px 0 0;min-height:21px}
 
@@ -91,24 +91,41 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 @media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}.links .l{display:none}.thumb{height:120px}}
 @media (max-width:400px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Shared menu: bottom tab bar on phones */
+.tabbar{display:none}
+@media (max-width:700px){
+  nav .links{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1.5px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;color:var(--muted);text-decoration:none;font:500 11px "DM Sans",system-ui,sans-serif}
+  .tabbar a[aria-current]{color:var(--brand);font-weight:700}
+  .tabbar svg{width:24px;height:24px}
+  .tabbar .plus{display:grid;place-items:center;width:44px;height:32px;border-radius:12px;background:var(--brand);color:var(--on-brand)}
+  .tabbar .plus svg{width:22px;height:22px}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important}
+}
 </style>
 </head>
 <body>
 <nav>
   <div class="wrap">
-    <a class="logo" href="product.html">Social Design</a>
+    <a class="logo" href="feed.html">Social Design</a>
     <div class="links">
-      <a class="l" href="profile.html">Profile</a>
-      <a class="l" href="shop.html" aria-current="page">Shop</a>
-      <button class="cartbtn" id="open" aria-haspopup="dialog">Cart <b id="count">0</b></button>
+      <a href="feed.html">Feed</a>
+      <a href="search.html">Search</a>
+      <a href="shop.html" aria-current="page">Shop</a>
+      <a href="create-post.html">Create</a>
+      <a href="profile.html">Profile</a>
     </div>
+    <button class="cartbtn" id="open" aria-haspopup="dialog">Cart <b id="count">0</b></button>
   </div>
 </nav>
 
 <main class="wrap">
   <header class="top">
-    <h1>The design shop</h1>
-    <p>Kits, templates, icons, fonts and courses made by designers, for designers.</p>
+    <h1>The wellness shop</h1>
+    <p>Programs, meal plans, guides and courses from coaches you trust. General wellness information, not medical advice.</p>
     <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
   </header>
   <section class="grid" id="grid" aria-label="Products"></section>
@@ -125,20 +142,27 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
   </div>
 </aside>
 
+<div class="tabbar" role="navigation" aria-label="Main">
+  <a href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Feed</span></a>
+  <a href="search.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></a>
+  <a href="create-post.html"><span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>Create</span></a>
+  <a href="shop.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Shop</span></a>
+  <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></a>
+</div>
 <script>
 const CURRENCY = 'USD'; // change to 'INR', 'EUR', etc.
 const money = n => new Intl.NumberFormat('en-US', {style:'currency', currency:CURRENCY, maximumFractionDigits:0}).format(n);
 
 // Sample products: replace with your own
 const products = [
-  {id:1, name:'Nova UI Kit',            cat:'UI kits',   price:49, bg:'#2E48F5', a:'#FF7EB6', b:'#FFC933', v:0},
-  {id:2, name:'Fintech App Screens',    cat:'UI kits',   price:39, bg:'#33C9A0', a:'#141B34', b:'#FFC933', v:1},
-  {id:3, name:'Portfolio Template',     cat:'Templates', price:29, bg:'#FFC933', a:'#2E48F5', b:'#FF7EB6', v:2},
-  {id:4, name:'Pitch Deck Pack',        cat:'Templates', price:35, bg:'#FF7EB6', a:'#FFFFFF', b:'#2E48F5', v:0},
-  {id:5, name:'Line Icon Set',          cat:'Icons',     price:19, bg:'#141B34', a:'#33C9A0', b:'#FF7EB6', v:1},
-  {id:6, name:'Duotone Icons',          cat:'Icons',     price:24, bg:'#6F83FF', a:'#FFC933', b:'#FFFFFF', v:2},
-  {id:7, name:'Grotesk Display Font',   cat:'Fonts',     price:29, bg:'#FFFFFF', a:'#2E48F5', b:'#FF7EB6', v:0},
-  {id:8, name:'Design Systems Course',  cat:'Courses',   price:59, bg:'#2E48F5', a:'#33C9A0', b:'#FFFFFF', v:1}
+  {id:1, name:'4-Week Strength Starter', cat:'Programs', price:39, bg:'#1E7A5A', a:'#F28B6B', b:'#F6C85F', v:0},
+  {id:2, name:'30-Day Mindful Mornings', cat:'Programs', price:29, bg:'#A8D8BC', a:'#16251F', b:'#F6C85F', v:1},
+  {id:3, name:'Balanced Vegetarian Meal Plan', cat:'Meal plans', price:24, bg:'#F6C85F', a:'#1E7A5A', b:'#F28B6B', v:2},
+  {id:4, name:'High-Protein Meal Plan', cat:'Meal plans', price:24, bg:'#F28B6B', a:'#FFFFFF', b:'#1E7A5A', v:0},
+  {id:5, name:'Better Sleep Guide', cat:'Guides', price:15, bg:'#16251F', a:'#A8D8BC', b:'#F28B6B', v:1},
+  {id:6, name:'Stress Relief Toolkit', cat:'Guides', price:19, bg:'#5FD1A0', a:'#F6C85F', b:'#FFFFFF', v:2},
+  {id:7, name:'Habit Coaching Course', cat:'Courses', price:59, bg:'#FFFFFF', a:'#1E7A5A', b:'#F28B6B', v:0},
+  {id:8, name:'Beginner Yoga Flow', cat:'Courses', price:35, bg:'#1E7A5A', a:'#A8D8BC', b:'#FFFFFF', v:1}
 ];
 const cats = ['All', ...new Set(products.map(p => p.cat))];
 const $ = id => document.getElementById(id);

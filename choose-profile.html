@@ -124,7 +124,8 @@ a{color:var(--brand);font-weight:500}
         <div class="badge" aria-hidden="true">✓</div>
         <h1 id="msg">You’re all set</h1>
         <p class="sub" id="detail"></p>
-        <a class="btn" href="profile.html">Go to my profile</a>
+        <a class="btn" href="feed.html">Go to my feed</a>
+        <a class="btn" href="profile.html" style="background:transparent;color:var(--brand);border:2px solid var(--brand);margin-top:10px">View my profile</a>
       </section>
     </div>
   </main>
@@ -138,6 +139,7 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const t = form.querySelector('input:checked');
   if (!t) return;
+  try { const d = JSON.parse(localStorage.getItem('sd-profile') || '{}'); d.type = t.value; localStorage.setItem('sd-profile', JSON.stringify(d)); } catch (e) {}
   const creator = t.value === 'Content creator';
   $('msg').textContent = creator ? 'You’re a content creator' : 'You’re a member';
   $('detail').textContent = creator

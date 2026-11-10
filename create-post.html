@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create a post | Social Design</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F5F8F3; --surface:#FFFFFF; --ink:#16251F; --muted:#586861; --line:#D6E0D9;
+  --brand:#1E7A5A; --coral:#F28B6B; --sun:#F6C85F; --sage:#A8D8BC; --err:#B3261E;
+  --on-brand:#FFFFFF; --tint:#E6F3EC;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15;--err:#FF8A80;--tint:#1B3A2E}
+}
+:root[data-theme="dark"]{--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15;--err:#FF8A80;--tint:#1B3A2E}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+a{color:var(--brand);font-weight:500}
+a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+nav{background:var(--surface);border-bottom:1.5px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif;color:var(--ink);text-decoration:none}
+.links{display:flex;gap:20px;align-items:center}
+.links a{color:var(--muted);text-decoration:none}
+.links a[aria-current]{color:var(--ink);font-weight:700}
+
+.top{padding:36px 0 20px}
+.top h1{font-size:clamp(32px,5vw,46px);line-height:1.05;font-weight:800}
+.top p{color:var(--muted);margin:8px 0 0}
+.layout{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;align-items:start;padding-bottom:64px}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:20px}
+.who{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font:800 16px "Bricolage Grotesque",sans-serif;color:#16251F}
+.who b{display:block;line-height:1.2}
+.who small{color:var(--muted)}
+label,legend{display:block;font-weight:500;margin-bottom:6px;padding:0}
+fieldset{border:0;padding:0;margin:0 0 18px;min-width:0}
+textarea,input[type=text],select{width:100%;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;font:inherit;padding:12px 14px}
+textarea{min-height:140px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:3px solid color-mix(in srgb,var(--brand) 25%,transparent);border-color:var(--brand)}
+.count{text-align:right;color:var(--muted);font-size:13px;margin-top:2px}
+.help{font-size:14px;color:var(--muted);margin:2px 0 14px}
+
+.add{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.addbtn{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;border:1.5px solid var(--brand);color:var(--brand);background:transparent;border-radius:10px;padding:8px 16px;font:700 15px "DM Sans",sans-serif;cursor:pointer}
+.addbtn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;font-size:0}
+.addbtn:focus-within{outline:3px solid var(--brand);outline-offset:2px}
+.addbtn svg{width:20px;height:20px;flex:none}
+.media{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:6px}
+.item{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);position:relative}
+.item img,.item video{display:block;width:100%;height:110px;object-fit:cover;background:#000}
+.item audio{display:block;width:100%;margin-top:34px}
+.item .meta{padding:8px 10px;font-size:13px;color:var(--muted);word-break:break-all}
+.item .meta input{margin-top:6px;padding:8px 10px;font-size:13px}
+.item .rm{position:absolute;top:6px;right:6px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:18px;cursor:pointer;line-height:1}
+.msg{font-size:14px;color:var(--muted);min-height:20px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;display:block;margin:0}
+.chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.chip span{display:flex;align-items:center;min-height:44px;border:1.5px solid var(--line);background:var(--surface);border-radius:99px;padding:8px 16px;font-size:15px;font-weight:500}
+.chip input:checked + span{background:var(--brand);border-color:var(--brand);color:var(--on-brand);font-weight:700}
+.chip input:focus-visible + span{outline:3px solid var(--brand);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;font-weight:400;margin:6px 0}
+.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--brand);flex:none}
+.err{color:var(--err);font-size:14px;min-height:20px;margin-top:6px}
+.btns{display:flex;gap:10px;margin-top:8px}
+.btn{flex:1;border:1.5px solid var(--brand);border-radius:10px;background:var(--brand);color:var(--on-brand);font:700 16px "DM Sans",sans-serif;padding:13px;cursor:pointer;min-height:48px;text-align:center;text-decoration:none;display:block}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn.sm{flex:none;min-height:44px;padding:8px 14px;font-size:14px}
+.btn:active{transform:scale(.98)}
+
+/* Helper */
+.helper{position:sticky;top:16px}
+.helper h2{font-size:24px;font-weight:800}
+.helper .lead{color:var(--muted);margin:4px 0 14px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.tool{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:10px 12px;min-height:48px;font:700 14px "DM Sans",sans-serif;cursor:pointer;text-align:left}
+.tool:hover{border-color:var(--brand)}
+.note{font-size:13px;color:var(--muted);background:var(--tint);border-radius:8px;padding:8px 12px;margin:0 0 12px}
+.res{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--bg)}
+.res h3{font:700 15px "DM Sans",sans-serif;letter-spacing:0;margin-bottom:6px}
+.res pre{margin:0 0 10px;white-space:pre-wrap;font:inherit;font-size:15px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.maker{margin-top:18px;border-top:1.5px solid var(--line);padding-top:16px}
+.maker h3{font-size:20px;font-weight:800;margin-bottom:10px}
+canvas{display:block;width:100%;max-width:340px;aspect-ratio:1;border-radius:12px;border:1.5px solid var(--line);margin:10px 0}
+.pal{display:flex;gap:8px;margin:8px 0 4px}
+.pal label{margin:0;position:relative}
+.pal input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.pal span{display:block;width:44px;height:44px;border-radius:50%;border:3px solid var(--line)}
+.pal input:checked + span{border-color:var(--ink)}
+.pal input:focus-visible + span{outline:3px solid var(--brand);outline-offset:2px}
+
+.done{display:none}
+.done.show{display:block}
+.done .badge{width:56px;height:56px;border-radius:50%;background:var(--sage);display:grid;place-items:center;color:#0E1A15;font-size:28px;font-weight:700;margin-bottom:16px}
+.done pre{white-space:pre-wrap;font:inherit;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+
+@media (max-width:900px){.layout{grid-template-columns:1fr}.helper{position:static}}
+@media (max-width:600px){.links .hide-sm{display:none}.tools{grid-template-columns:1fr}.btns{flex-direction:column-reverse}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+
+/* Shared menu: bottom tab bar on phones */
+.tabbar{display:none}
+@media (max-width:700px){
+  nav .links{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1.5px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;color:var(--muted);text-decoration:none;font:500 11px "DM Sans",system-ui,sans-serif}
+  .tabbar a[aria-current]{color:var(--brand);font-weight:700}
+  .tabbar svg{width:24px;height:24px}
+  .tabbar .plus{display:grid;place-items:center;width:44px;height:32px;border-radius:12px;background:var(--brand);color:var(--on-brand)}
+  .tabbar .plus svg{width:22px;height:22px}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="logo" href="feed.html">Social Design</a>
+    <div class="links">
+      <a href="feed.html">Feed</a>
+      <a href="search.html">Search</a>
+      <a href="shop.html">Shop</a>
+      <a href="create-post.html" aria-current="page">Create</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="top">
+    <h1>Create a post</h1>
+    <p>Share a tip, a photo, a video or a voice note. No idea how to say it? The idea helper can get you started.</p>
+  </header>
+
+  <div class="layout">
+    <section class="card" id="composerCard">
+      <form id="form" novalidate>
+        <div class="who"><span class="av" aria-hidden="true">MR</span><span><b>Maya Rao</b><small>Content creator</small></span></div>
+
+        <label for="text">What do you want to share?</label>
+        <textarea id="text" maxlength="1000" placeholder="Type your idea or what you want to say. Even a rough thought is fine."></textarea>
+        <div class="count" id="count">0 / 1000</div>
+        <p class="help">Need help? <a href="#helper">Try the idea helper</a>.</p>
+
+        <div class="add">
+          <label class="addbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>Photo<input type="file" id="fPhoto" accept="image/*" multiple aria-label="Add photos"></label>
+          <label class="addbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3z"/></svg>Video<input type="file" id="fVideo" accept="video/*" multiple aria-label="Add videos"></label>
+          <label class="addbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Audio<input type="file" id="fAudio" accept="audio/*" multiple aria-label="Add audio files"></label>
+        </div>
+        <div class="media" id="media"></div>
+        <div class="msg" id="mediaMsg" role="status"></div>
+
+        <fieldset>
+          <legend>Category</legend>
+          <div class="chips" id="cats"></div>
+        </fieldset>
+
+        <div class="field" style="margin-bottom:18px">
+          <label for="vis">Who can see this?</label>
+          <select id="vis"><option>Everyone</option><option>Followers only</option></select>
+        </div>
+
+        <label class="check"><input type="checkbox" id="ack"> <span>I’m sharing general wellness information, not personal medical advice.</span></label>
+        <div class="err" id="postErr" role="alert"></div>
+
+        <div class="btns">
+          <button type="button" class="btn ghost" id="draft">Save draft</button>
+          <button type="submit" class="btn">Post</button>
+        </div>
+      </form>
+
+      <section class="done" id="done" aria-live="polite">
+        <div class="badge" aria-hidden="true">✓</div>
+        <h2 style="font-size:28px;font-weight:800;margin-bottom:6px">Your post is ready</h2>
+        <p class="help" style="margin-bottom:12px">This is a preview, so nothing was uploaded yet.</p>
+        <pre id="summary"></pre>
+        <div class="btns"><button type="button" class="btn ghost" id="again">Create another</button><a class="btn" href="profile.html">View my profile</a></div>
+      </section>
+    </section>
+
+    <aside class="card helper" id="helper">
+      <h2>Idea helper</h2>
+      <p class="lead">Type your idea in the post box, then pick what you’d like help with.</p>
+      <label for="tone">Tone</label>
+      <select id="tone"><option>Friendly</option><option>Motivating</option><option>Calm</option><option>Professional</option></select>
+      <div class="tools">
+        <button type="button" class="tool" data-t="post">✍️ Write my post</button>
+        <button type="button" class="tool" data-t="image">🖼️ Picture ideas</button>
+        <button type="button" class="tool" data-t="video">🎬 Video script</button>
+        <button type="button" class="tool" data-t="audio">🎙️ Voice note script</button>
+        <button type="button" class="tool" data-t="tags"># Hashtags</button>
+      </div>
+      <p class="note">Preview mode: suggestions use simple templates for now. Real AI can be connected later.</p>
+      <div id="results" aria-live="polite"></div>
+
+      <div class="maker">
+        <h3>Make a quote card</h3>
+        <p class="help">Turn one line into a picture you can add to your post.</p>
+        <label for="qtext">Card text</label>
+        <input type="text" id="qtext" maxlength="120" value="Small steps, every day.">
+        <div class="row" style="margin-top:8px"><button type="button" class="btn ghost sm" id="fill">Use my idea</button></div>
+        <div class="pal" role="radiogroup" aria-label="Card colour" id="pal"></div>
+        <canvas id="cv" width="1080" height="1080" role="img" aria-label="Quote card preview"></canvas>
+        <div class="row"><button type="button" class="btn sm" id="addCard">Add to post</button><button type="button" class="btn ghost sm" id="dlCard">Download</button></div>
+      </div>
+    </aside>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<div class="tabbar" role="navigation" aria-label="Main">
+  <a href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Feed</span></a>
+  <a href="search.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></a>
+  <a href="create-post.html" aria-current="page"><span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>Create</span></a>
+  <a href="shop.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Shop</span></a>
+  <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></a>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let MY = {}; try { MY = JSON.parse(localStorage.getItem('sd-profile') || '{}') || {}; } catch (e) {}
+const myName = MY.name || 'Maya Rao', myUser = MY.username || 'mayarao', first = myName.split(' ')[0];
+document.querySelector('.who .av').textContent = myName.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+document.querySelector('.who b').textContent = myName;
+document.querySelector('.who small').textContent = MY.type === 'User' ? 'Member' : 'Content creator';
+const cats = ['Nutrition', 'Fitness', 'Sleep', 'Mental wellness', 'Yoga and mindfulness', 'Habits', 'Other'];
+$('cats').innerHTML = cats.map(c => `<label class="chip"><input type="radio" name="cat" value="${c}"><span>${c}</span></label>`).join('');
+const cat = () => (document.querySelector('input[name="cat"]:checked') || {}).value || '';
+
+let toastTimer;
+function toast(t){ $('toast').textContent = t; $('toast').classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('on'), 2600); }
+
+// ---------- Text box
+$('text').addEventListener('input', () => { $('count').textContent = $('text').value.length + ' / 1000'; $('postErr').textContent = ''; });
+
+// ---------- Media (photos, videos, audio)
+const MAX_FILES = 6, MAX_MB = 100;
+let files = [], nextId = 1;
+const fmt = b => b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+function addFiles(list, alt = ''){
+  const notes = [];
+  [...list].forEach(f => {
+    const kind = f.type.startsWith('image/') ? 'image' : f.type.startsWith('video/') ? 'video' : f.type.startsWith('audio/') ? 'audio' : '';
+    if (!kind) return notes.push(`${f.name} isn’t a photo, video or audio file.`);
+    if (files.length >= MAX_FILES) return notes.push(`You can add up to ${MAX_FILES} files.`);
+    if (f.size > MAX_MB * 1048576) return notes.push(`${f.name} is over ${MAX_MB} MB.`);
+    files.push({id: nextId++, file: f, kind, url: URL.createObjectURL(f), alt});
+  });
+  $('mediaMsg').textContent = [...new Set(notes)].join(' ');
+  drawMedia(); $('postErr').textContent = '';
+}
+function drawMedia(){
+  $('media').innerHTML = '';
+  files.forEach(m => {
+    const d = document.createElement('div'); d.className = 'item';
+    let el;
+    if (m.kind === 'image'){ el = document.createElement('img'); el.src = m.url; el.alt = m.alt || m.file.name; }
+    else if (m.kind === 'video'){ el = document.createElement('video'); el.src = m.url; el.controls = true; el.preload = 'metadata'; el.setAttribute('aria-label', m.file.name); }
+    else { el = document.createElement('audio'); el.src = m.url; el.controls = true; el.setAttribute('aria-label', m.file.name); }
+    const meta = document.createElement('div'); meta.className = 'meta';
+    meta.textContent = `${m.file.name} · ${fmt(m.file.size)}`;
+    if (m.kind === 'image'){
+      const a = document.createElement('input'); a.type = 'text'; a.value = m.alt; a.placeholder = 'Describe this image (optional)';
+      a.setAttribute('aria-label', 'Image description for ' + m.file.name);
+      a.addEventListener('input', () => { m.alt = a.value; el.alt = a.value || m.file.name; });
+      meta.append(a);
+    }
+    const rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm'; rm.textContent = '×';
+    rm.setAttribute('aria-label', 'Remove ' + m.file.name);
+    rm.onclick = () => { URL.revokeObjectURL(m.url); files = files.filter(x => x.id !== m.id); $('mediaMsg').textContent = ''; drawMedia(); };
+    d.append(el, meta, rm); $('media').append(d);
+  });
+}
+['fPhoto', 'fVideo', 'fAudio'].forEach(id => $(id).addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; }));
+
+// ---------- Draft (text only, saved on this device)
+const KEY = 'sd-draft';
+function setCat(v){ const r = document.querySelector(`input[name="cat"][value="${v}"]`); if (r) r.checked = true; }
+$('draft').onclick = () => {
+  try {
+    localStorage.setItem(KEY, JSON.stringify({text: $('text').value, cat: cat(), vis: $('vis').value}));
+    toast('Draft saved on this device. Photos, videos and audio aren’t saved in drafts yet.');
+  } catch (e) { toast('Couldn’t save the draft here.'); }
+};
+try {
+  const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+  if (d){ $('text').value = d.text || ''; $('count').textContent = $('text').value.length + ' / 1000'; setCat(d.cat); if (d.vis) $('vis').value = d.vis; }
+} catch (e) {}
+
+// ---------- Idea helper (templates for now)
+// LATER: replace makeText() with a call to your own server, for example:
+//   const r = await fetch('/api/assist', {method:'POST', body: JSON.stringify({idea, tone, kind})});
+// Keep any AI key on the server, never in this page.
+const tones = {
+  Friendly:     {open: ['Quick tip:', 'Here’s something I love sharing:'], close: 'Try it this week and tell me how it goes in the comments!'},
+  Motivating:   {open: ['Small steps add up.', 'You can do this.'], close: 'Start today. One small action is enough.'},
+  Calm:         {open: ['Take a slow breath.', 'No rush.'], close: 'Be kind to yourself and go at your own pace.'},
+  Professional: {open: ['A practical tip from my coaching:', 'One thing I often share with clients:'], close: 'Questions? Leave them below and I’ll reply.'}
+};
+const stop = new Set(['the','with','that','this','your','from','have','about','which','would','there','their','what','when','will','into','more','than','them','then','just','like','make','some','very','could','should','being','because']);
+const tidy = t => t.trim().replace(/\s+/g, ' ');
+const sent = t => { t = tidy(t).replace(/[.!?]+$/, ''); return t.charAt(0).toUpperCase() + t.slice(1); };
+const brief = (t, n) => { t = tidy(t).replace(/[.!?]+$/, ''); return t.length > n ? t.slice(0, n - 1).replace(/\s\S*$/, '') + '…' : t; };
+const keywords = t => [...new Set((t.toLowerCase().match(/[a-z]{5,}/g) || []).filter(w => !stop.has(w)))].slice(0, 3);
+const catTags = {Nutrition: ['nutrition', 'healthyeating'], Fitness: ['fitness', 'movement'], Sleep: ['sleep', 'rest'], 'Mental wellness': ['mentalwellness', 'mindfulness'], 'Yoga and mindfulness': ['yoga', 'mindfulness'], Habits: ['healthyhabits', 'smallsteps']};
+
+function makeText(kind, idea, tone){
+  const T = tones[tone], one = brief(idea, 90), pick = T.open[idea.length % 2];
+  if (kind === 'post') return ['Suggested post',
+    `${pick}\n\n${sent(idea)}.\n\nWhat to try:\n1. Start small and keep it simple.\n2. Pick a time you can repeat every day.\n3. Notice how you feel after a week.\n\n${T.close}`, 'use'];
+  if (kind === 'image') return ['Picture ideas',
+    `Picture prompt:\nA bright, natural-light photo about “${one}”. Calm green and warm coral tones, clean background, plenty of empty space for text.\n\nTips:\n• Use natural light near a window.\n• Keep one clear subject.\n• Leave space at the top for a headline.\n• Square (1:1) or portrait (4:5) crops work best on phones.`, 'copy'];
+  if (kind === 'video') return ['Video script (30–45 seconds)',
+    `Hook (first 3 seconds):\n“Ever wondered about this? ${sent(one)}.”\n\nBeat 1 (5–8 sec): Show the common problem.\nBeat 2 (15–20 sec): Give your one simple tip.\nBeat 3 (5–10 sec): Show the result or what to expect.\n\nEnding: “Follow for more simple wellness tips.”\n\nTips: film vertically, add captions, use good light, keep the phone steady.`, 'copy'];
+  if (kind === 'audio') return ['Voice note script (60–90 seconds)',
+    `Intro: “Hi, I’m ${first}. Today: ${one.toLowerCase()}.”\n\nPoint 1: Why this matters.\nPoint 2: One simple thing to try.\nPoint 3: What to expect in the first week.\n\nClosing: “${T.close}”\n\nTip: record in a quiet room, holding the phone about a hand’s width from your mouth.`, 'copy'];
+  const tags = [...(catTags[cat()] || ['wellness', 'healthyhabits']), ...keywords(idea)].slice(0, 6).map(w => '#' + w);
+  return ['Hashtags', tags.join(' '), 'tags'];
+}
+
+let prevText = null;
+function showResult([title, body, mode]){
+  const box = document.createElement('div'); box.className = 'res';
+  const h = document.createElement('h3'); h.textContent = title;
+  const pre = document.createElement('pre'); pre.textContent = body;
+  const row = document.createElement('div'); row.className = 'row';
+  const mk = (txt, fn, ghost = true) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn sm' + (ghost ? ' ghost' : ''); b.textContent = txt; b.onclick = fn; row.append(b); };
+  if (mode === 'use') mk('Use as my post', () => { prevText = $('text').value; $('text').value = body; $('text').dispatchEvent(new Event('input')); toast('Post text replaced. You can edit it.'); }, false);
+  if (mode === 'tags') mk('Add to my post', () => { $('text').value = ($('text').value.trim() + '\n\n' + body).trim(); $('text').dispatchEvent(new Event('input')); toast('Hashtags added.'); }, false);
+  mk('Copy', () => { (navigator.clipboard ? navigator.clipboard.writeText(body) : Promise.reject()).then(() => toast('Copied.'), () => toast('Select the text and copy it.')); });
+  box.append(h, pre, row);
+  $('results').prepend(box);
+}
+document.querySelector('.tools').addEventListener('click', e => {
+  const b = e.target.closest('.tool'); if (!b) return;
+  const idea = tidy($('text').value);
+  if (idea.length < 4){ toast('Type your idea in the post box first.'); $('text').focus(); return; }
+  showResult(makeText(b.dataset.t, idea, $('tone').value));
+});
+document.addEventListener('keydown', e => { if (e.key === 'z' && (e.ctrlKey || e.metaKey) && prevText !== null && document.activeElement !== $('text')){ $('text').value = prevText; prevText = null; } });
+
+// ---------- Quote card (a real picture, made in your browser)
+const palettes = [
+  {name: 'Green', bg: '#1E7A5A', fg: '#FFFFFF', a: '#F28B6B', b: '#F6C85F'},
+  {name: 'Sun',   bg: '#F6C85F', fg: '#16251F', a: '#1E7A5A', b: '#F28B6B'},
+  {name: 'Mint',  bg: '#A8D8BC', fg: '#16251F', a: '#1E7A5A', b: '#F6C85F'},
+  {name: 'Night', bg: '#16251F', fg: '#EAF3EE', a: '#5FD1A0', b: '#F28B6B'}
+];
+$('pal').innerHTML = palettes.map((p, i) => `<label><input type="radio" name="pal" value="${i}" ${i === 0 ? 'checked' : ''} aria-label="${p.name}"><span style="background:${p.bg}"></span></label>`).join('');
+const cv = $('cv'), cx = cv.getContext('2d');
+function wrap(text, font, maxW){
+  cx.font = font; const words = text.split(' '); const lines = []; let line = '';
+  words.forEach(w => { const t = line ? line + ' ' + w : w; if (cx.measureText(t).width > maxW && line){ lines.push(line); line = w; } else line = t; });
+  if (line) lines.push(line); return lines;
+}
+function drawCard(){
+  const p = palettes[+document.querySelector('input[name="pal"]:checked').value];
+  const W = 1080;
+  cx.clearRect(0, 0, W, W); cx.fillStyle = p.bg; cx.fillRect(0, 0, W, W);
+  cx.fillStyle = p.a; cx.beginPath(); cx.arc(W - 90, 90, 230, 0, Math.PI * 2); cx.fill();
+  cx.fillStyle = p.b; cx.beginPath(); cx.moveTo(0, W); cx.lineTo(0, W - 260); cx.arc(0, W, 260, -Math.PI / 2, 0); cx.closePath(); cx.fill();
+  const text = tidy($('qtext').value) || ' ';
+  let size = 96, lines;
+  for (; size >= 52; size -= 6){ lines = wrap(text, `800 ${size}px "Bricolage Grotesque", "DM Sans", system-ui, sans-serif`, 860); if (lines.length * size * 1.12 <= 560) break; }
+  cx.fillStyle = p.fg; cx.textBaseline = 'top'; cx.font = `800 ${size}px "Bricolage Grotesque", "DM Sans", system-ui, sans-serif`;
+  const top = 330 - (lines.length * size * 1.12) / 2 + 140;
+  lines.forEach((l, i) => cx.fillText(l, 100, top + i * size * 1.12));
+  cx.font = '700 38px "DM Sans", system-ui, sans-serif'; cx.fillText('Social Design  ·  @' + myUser, 100, W - 110);
+}
+['qtext'].forEach(id => $(id).addEventListener('input', drawCard));
+$('pal').addEventListener('change', drawCard);
+$('fill').onclick = () => { const i = tidy($('text').value); if (!i){ toast('Type your idea in the post box first.'); $('text').focus(); return; } const ln = $('text').value.split(/\n+/).map(tidy).filter(Boolean); const pick = ln.find(l => l.length >= 25 && !l.endsWith(':')) || ln[0]; $('qtext').value = brief(pick.split(/[.!?]/)[0], 110); drawCard(); };
+$('addCard').onclick = () => cv.toBlob(b => { addFiles([new File([b], 'quote-card.png', {type: 'image/png'})], tidy($('qtext').value)); toast('Quote card added to your post.'); });
+$('dlCard').onclick = () => cv.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'quote-card.png'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); });
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(drawCard); drawCard();
+
+// ---------- Post
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = $('text').value.trim();
+  let msg = '';
+  if (!text && !files.length) msg = 'Add some text, a photo, a video or an audio file.';
+  else if (!cat()) msg = 'Choose a category.';
+  else if (!$('ack').checked) msg = 'Please confirm the note about general wellness information.';
+  $('postErr').textContent = msg;
+  if (msg) return;
+  const n = k => files.filter(f => f.kind === k).length;
+  $('summary').textContent = `${text || '(No text)'}\n\nCategory: ${cat()}\nVisible to: ${$('vis').value}\nAttached: ${n('image')} photo(s), ${n('video')} video(s), ${n('audio')} audio file(s)`;
+  $('form').style.display = 'none'; $('done').classList.add('show'); window.scrollTo(0, 0);
+  try { localStorage.removeItem(KEY); } catch (er) {}
+});
+$('again').onclick = () => {
+  files.forEach(f => URL.revokeObjectURL(f.url)); files = []; drawMedia();
+  $('form').reset(); $('count').textContent = '0 / 1000'; $('postErr').textContent = ''; $('mediaMsg').textContent = '';
+  $('form').style.display = ''; $('done').classList.remove('show');
+};
+</script>
+</body>
+</html>

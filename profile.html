@@ -7,21 +7,21 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
 :root{
-  --bg:#F1F3F9; --surface:#FFFFFF; --ink:#141B34; --muted:#5A6283; --line:#D3D8E8;
-  --cobalt:#2E48F5; --pink:#FF7EB6; --sun:#FFC933; --mint:#33C9A0;
-  --on-cobalt:#FFFFFF;
+  --bg:#F5F8F3; --surface:#FFFFFF; --ink:#16251F; --muted:#586861; --line:#D6E0D9;
+  --brand:#1E7A5A; --coral:#F28B6B; --sun:#F6C85F; --sage:#A8D8BC;
+  --on-brand:#FFFFFF;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--on-cobalt:#0D1226}
+  :root:not([data-theme="light"]){--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15}
 }
-:root[data-theme="dark"]{--bg:#0D1226;--surface:#171E3A;--ink:#EEF1FC;--muted:#A3ABCB;--line:#2C3560;--cobalt:#6F83FF;--on-cobalt:#0D1226}
+:root[data-theme="dark"]{--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
-a{color:var(--cobalt);font-weight:500}
-a:focus-visible,button:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+a{color:var(--brand);font-weight:500}
+a:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
 
 /* Nav */
@@ -33,20 +33,20 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .links a[aria-current]{color:var(--ink);font-weight:700}
 
 /* Cover + header */
-.cover{height:200px;background:var(--cobalt);position:relative;overflow:hidden}
+.cover{height:200px;background:var(--brand);position:relative;overflow:hidden}
 .cover i{position:absolute;display:block}
-.c1{width:220px;height:220px;border-radius:50%;background:var(--pink);right:8%;top:-90px}
+.c1{width:220px;height:220px;border-radius:50%;background:var(--coral);right:8%;top:-90px}
 .c2{width:130px;height:130px;background:var(--sun);right:24%;bottom:-1px;border-radius:130px 130px 0 0}
-.c3{width:90px;height:90px;border:14px solid var(--on-cobalt);border-radius:50%;left:6%;top:36px;opacity:.9}
-.c4{width:110px;height:110px;background:var(--mint);right:calc(8% + 200px);bottom:-1px;border-radius:110px 0 0 0}
+.c3{width:90px;height:90px;border:14px solid var(--on-brand);border-radius:50%;left:6%;top:36px;opacity:.9}
+.c4{width:110px;height:110px;background:var(--sage);right:calc(8% + 200px);bottom:-1px;border-radius:110px 0 0 0}
 .head{display:flex;gap:20px;align-items:flex-start;margin-top:-52px;position:relative;flex-wrap:wrap}
-.avatar{width:104px;height:104px;border-radius:50%;background:var(--sun);border:5px solid var(--bg);display:grid;place-items:center;font:800 38px "Bricolage Grotesque",sans-serif;color:#141B34;flex:none}
+.avatar{width:104px;height:104px;border-radius:50%;background:var(--sun);border:5px solid var(--bg);display:grid;place-items:center;font:800 38px "Bricolage Grotesque",sans-serif;color:#16251F;flex:none}
 .who{flex:1;min-width:200px;margin-top:60px}
 .who h1{font:800 32px/1.1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;margin:0}
 .handle{color:var(--muted);margin:2px 0 0}
 .actions{display:flex;gap:10px;margin-top:62px}
-.btn{border:1.5px solid var(--cobalt);border-radius:10px;background:var(--cobalt);color:var(--on-cobalt);font:700 15px "DM Sans",sans-serif;padding:11px 22px;cursor:pointer;min-height:44px}
-.btn.ghost{background:transparent;color:var(--cobalt)}
+.btn{border:1.5px solid var(--brand);border-radius:10px;background:var(--brand);color:var(--on-brand);font:700 15px "DM Sans",sans-serif;padding:11px 22px;cursor:pointer;min-height:44px}
+.btn.ghost{background:transparent;color:var(--brand)}
 .bio{max-width:60ch;margin:18px 0 0}
 .stats{display:flex;gap:28px;margin:18px 0 0;padding:0;list-style:none}
 .stats b{font:800 22px "Bricolage Grotesque",sans-serif;display:block;line-height:1.1}
@@ -55,7 +55,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 /* Tabs */
 .tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin:28px 0 24px}
 .tab{border:0;background:transparent;color:var(--muted);font:500 16px "DM Sans",sans-serif;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;min-height:44px}
-.tab[aria-selected=true]{color:var(--ink);font-weight:700;border-bottom-color:var(--cobalt)}
+.tab[aria-selected=true]{color:var(--ink);font-weight:700;border-bottom-color:var(--brand)}
 
 /* Project grid */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-bottom:56px}
@@ -65,8 +65,13 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .meta{padding:14px 16px 16px}
 .meta h3{margin:0;font:700 17px/1.3 "DM Sans",sans-serif}
 .meta p{margin:2px 0 10px;color:var(--muted);font-size:14px}
-.like{border:0;background:transparent;color:var(--muted);font:500 14px "DM Sans",sans-serif;cursor:pointer;padding:6px 0;min-height:44px;display:inline-flex;align-items:center;gap:6px}
-.like[aria-pressed=true]{color:var(--pink);font-weight:700}
+.rxs{display:flex;flex-wrap:wrap;gap:5px}
+.rx{--c:var(--coral);border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:4px 9px;min-height:44px;font:500 13px "DM Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.rx[data-k=vibe]{--c:#D99A1B}
+.rx[data-k=practice]{--c:var(--brand)}
+.rx[aria-pressed=true]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.rx b{font-weight:700}
+.rx .g{color:var(--c)}
 
 /* About */
 .about{display:none;padding-bottom:56px;max-width:60ch}
@@ -84,16 +89,32 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
   .actions .btn{flex:1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Shared menu: bottom tab bar on phones */
+.tabbar{display:none}
+@media (max-width:700px){
+  nav .links{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1.5px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;color:var(--muted);text-decoration:none;font:500 11px "DM Sans",system-ui,sans-serif}
+  .tabbar a[aria-current]{color:var(--brand);font-weight:700}
+  .tabbar svg{width:24px;height:24px}
+  .tabbar .plus{display:grid;place-items:center;width:44px;height:32px;border-radius:12px;background:var(--brand);color:var(--on-brand)}
+  .tabbar .plus svg{width:22px;height:22px}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important}
+}
 </style>
 </head>
 <body>
 <nav>
   <div class="wrap">
-    <a class="logo" href="index.html">Social Design</a>
+    <a class="logo" href="feed.html">Social Design</a>
     <div class="links">
-      <a class="hide-sm" href="#feed">Feed</a>
+      <a href="feed.html">Feed</a>
+      <a href="search.html">Search</a>
+      <a href="shop.html">Shop</a>
+      <a href="create-post.html">Create</a>
       <a href="profile.html" aria-current="page">Profile</a>
-      <a href="login.html">Log out</a>
     </div>
   </div>
 </nav>
@@ -106,64 +127,77 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
       <div class="avatar" aria-hidden="true">MR</div>
       <div class="who">
         <h1>Maya Rao</h1>
-        <p class="handle">@mayarao · UI/UX designer</p>
+        <p class="handle">@mayarao · Nutrition and lifestyle coach</p>
       </div>
       <div class="actions">
         <button class="btn" id="follow" aria-pressed="false">Follow</button>
         <button class="btn ghost" type="button">Message</button>
+        <a class="btn ghost" href="login.html" style="text-decoration:none;display:inline-flex;align-items:center">Log out</a>
       </div>
     </div>
-    <p class="bio">Designing calm, useful interfaces for apps people open every day. Always up for a critique swap or a collab.</p>
+    <p class="bio">Helping busy people build simple, lasting eating and sleep habits. Weekly recipes, routines and honest Q&amp;As.</p>
     <ul class="stats">
-      <li><b>6</b><span>Projects</span></li>
+      <li><b>6</b><span>Posts</span></li>
       <li><b id="followers">1,248</b><span>Followers</span></li>
       <li><b>312</b><span>Following</span></li>
     </ul>
   </header>
 
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" id="t-projects" aria-selected="true" aria-controls="projects">Projects</button>
+    <button class="tab" role="tab" id="t-projects" aria-selected="true" aria-controls="projects">Posts</button>
     <button class="tab" role="tab" id="t-about" aria-selected="false" aria-controls="about">About</button>
   </div>
 
   <section class="grid" id="projects" role="tabpanel" aria-labelledby="t-projects"></section>
 
   <section class="about" id="about" role="tabpanel" aria-labelledby="t-about">
-    <h2>Skills</h2>
-    <ul class="chips"><li>UI design</li><li>UX research</li><li>Prototyping</li><li>Design systems</li><li>Branding</li></ul>
-    <h2 style="margin-top:28px">Open to</h2>
-    <ul><li>Freelance projects</li><li>Critique swaps</li><li>Collaborations</li></ul>
+    <h2>Specialties</h2>
+    <ul class="chips"><li>Nutrition</li><li>Sleep</li><li>Habit coaching</li><li>Stress management</li><li>Beginner fitness</li></ul>
+    <h2 style="margin-top:28px">Offers</h2>
+    <ul><li>1:1 coaching</li><li>Group programs</li><li>Weekly newsletter</li></ul>
+    <p style="margin-top:28px;font-size:14px;color:var(--muted)">Social Design shares general wellness information. It isn’t medical advice.</p>
   </section>
 </main>
 
+<div class="tabbar" role="navigation" aria-label="Main">
+  <a href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Feed</span></a>
+  <a href="search.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></a>
+  <a href="create-post.html"><span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>Create</span></a>
+  <a href="shop.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Shop</span></a>
+  <a href="profile.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></a>
+</div>
 <script>
 const $ = id => document.getElementById(id);
 
-// Sample projects (swap for real data once there is a backend)
+// Sample posts (swap for real data once there is a backend)
 const projects = [
-  {t:'Mindful habit tracker', c:'Mobile app', bg:'#2E48F5', shapes:[['50%','90px','90px','#FF7EB6','60px','20px'],['20px','60px','110px','#FFC933','0','50px']]},
-  {t:'Bloom plant shop', c:'Branding', bg:'#33C9A0', shapes:[['50%','110px','110px','#141B34','100px','30px'],['30px','50px','90px','#FFC933','45px 45px 0 0','80px']]},
-  {t:'Transit map redesign', c:'Web design', bg:'#FFC933', shapes:[['50%','120px','120px','#2E48F5','0 120px 0 0','40px'],['50%','60px','60px','#FF7EB6','50%','90px']]},
-  {t:'Wellness onboarding', c:'UX flow', bg:'#FF7EB6', shapes:[['30px','100px','100px','#FFFFFF','50%','40px'],['50%','110px','80px','#2E48F5','80px 80px 0 0','70px']]},
-  {t:'Podcast player', c:'Mobile app', bg:'#141B34', shapes:[['40px','90px','90px','#33C9A0','50%','40px'],['50%','80px','80px','#FF7EB6','0 80px 0 0','60px']]},
-  {t:'Pocket budget', c:'Design system', bg:'#6F83FF', shapes:[['50%','120px','60px','#FFC933','60px 60px 0 0','100px'],['30px','70px','70px','#FFFFFF','50%','50px']]}
+  {t:'Sunday meal prep in 45 minutes', c:'Nutrition', bg:'#1E7A5A', shapes:[['50%','90px','90px','#F28B6B','60px','20px'],['20px','60px','110px','#F6C85F','0','50px']]},
+  {t:'A 10-minute evening wind-down', c:'Sleep', bg:'#A8D8BC', shapes:[['50%','110px','110px','#16251F','100px','30px'],['30px','50px','90px','#F6C85F','45px 45px 0 0','80px']]},
+  {t:'Beginner strength: week one', c:'Fitness', bg:'#F6C85F', shapes:[['50%','120px','120px','#1E7A5A','0 120px 0 0','40px'],['50%','60px','60px','#F28B6B','50%','90px']]},
+  {t:'Desk stretches for stiff necks', c:'Movement', bg:'#F28B6B', shapes:[['30px','100px','100px','#FFFFFF','50%','40px'],['50%','110px','80px','#1E7A5A','80px 80px 0 0','70px']]},
+  {t:'Mindful breathing for busy days', c:'Mental wellness', bg:'#16251F', shapes:[['40px','90px','90px','#A8D8BC','50%','40px'],['50%','80px','80px','#F28B6B','0 80px 0 0','60px']]},
+  {t:'Gut-friendly breakfast ideas', c:'Nutrition', bg:'#5FD1A0', shapes:[['50%','120px','60px','#F6C85F','60px 60px 0 0','100px'],['30px','70px','70px','#FFFFFF','50%','50px']]}
 ];
 const grid = $('projects');
 projects.forEach((p, i) => {
   const s = p.shapes.map(([l, w, h, col, r, top]) =>
     `<i style="left:${l === '50%' ? '55%' : l};top:${top};width:${w};height:${h};background:${col};border-radius:${r}"></i>`).join('');
-  const likes = 40 + i * 17;
+  const likes = 40 + i * 17, vibes = Math.round(likes * 0.4), prac = Math.round(likes * 0.25);
   grid.insertAdjacentHTML('beforeend',
     `<article class="card"><div class="thumb" style="background:${p.bg}" aria-hidden="true">${s}</div>
      <div class="meta"><h3>${p.t}</h3><p>${p.c}</p>
-     <button class="like" aria-pressed="false" data-n="${likes}">♡ <span>${likes}</span></button></div></article>`);
+     <div class="rxs" role="group" aria-label="Reactions">
+       <button class="rx" data-k="like" aria-pressed="false" data-n="${likes}" title="Like this post"><span class="g">♡</span> Like <b>${likes}</b></button>
+       <button class="rx" data-k="vibe" aria-pressed="false" data-n="${vibes}" title="Vibe: this speaks to me"><span class="g">✦</span> Vibe <b>${vibes}</b></button>
+       <button class="rx" data-k="practice" aria-pressed="false" data-n="${prac}" title="Practice: I tried it, or I will"><span class="g">✓</span> Practice <b>${prac}</b></button>
+     </div></div></article>`);
 });
 grid.addEventListener('click', e => {
-  const b = e.target.closest('.like'); if (!b) return;
+  const b = e.target.closest('.rx'); if (!b) return;
   const on = b.getAttribute('aria-pressed') !== 'true';
   b.setAttribute('aria-pressed', on);
-  b.firstChild.textContent = on ? '♥ ' : '♡ ';
-  b.querySelector('span').textContent = +b.dataset.n + (on ? 1 : 0);
+  if (b.dataset.k === 'like') b.querySelector('.g').textContent = on ? '♥' : '♡';
+  b.querySelector('b').textContent = +b.dataset.n + (on ? 1 : 0);
 });
 
 // Follow button
@@ -186,6 +220,42 @@ function openTab(name){
 }
 $('t-projects').onclick = () => openTab('projects');
 $('t-about').onclick = () => openTab('about');
+
+// ---------- Your own profile (saved on this device when you sign up)
+// profile.html shows you. profile.html?coach=1 shows the sample coach (used by links from the feed).
+(function(){
+  if (new URLSearchParams(location.search).has('coach')) return;
+  let my = null; try { my = JSON.parse(localStorage.getItem('sd-profile') || 'null'); } catch (e) {}
+  if (!my || !my.name) return;
+  const label = my.type === 'Content creator' ? 'Content creator' : my.type === 'User' ? 'Member' : 'New member';
+  const ini = my.name.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  document.title = my.name + ' | Social Design';
+  document.querySelector('.avatar').textContent = ini;
+  document.querySelector('.who h1').textContent = my.name;
+  document.querySelector('.handle').textContent = '@' + my.username + ' · ' + label;
+  const bits = [];
+  if (my.journey) bits.push('Wellness journey: ' + my.journey.toLowerCase() + '.');
+  if (my.location) bits.push('Based in ' + my.location + '.');
+  document.querySelector('.bio').textContent = bits.join(' ') || 'Welcome to my profile.';
+  document.querySelectorAll('.stats b').forEach(b => b.textContent = '0');
+  const act = document.querySelector('.actions'); act.innerHTML = '';
+  const mk = (txt, href, ghost) => { const a = document.createElement('a'); a.className = 'btn' + (ghost ? ' ghost' : ''); a.href = href; a.textContent = txt; a.style.cssText = 'text-decoration:none;display:inline-flex;align-items:center'; act.append(a); return a; };
+  mk('New post', 'create-post.html', false);
+  mk('Start over', 'index.html', true).onclick = () => { try { localStorage.removeItem('sd-profile'); } catch (e) {} };
+  mk('Log out', 'login.html', true);
+  const g = $('projects'); g.innerHTML = '';
+  const empty = document.createElement('div'); empty.className = 'card'; empty.style.cssText = 'grid-column:1/-1;padding:32px 20px;text-align:center';
+  const h = document.createElement('h3'); h.textContent = 'No posts yet'; h.style.margin = '0 0 6px';
+  const p = document.createElement('p'); p.style.cssText = 'margin:0 0 16px;color:var(--muted)'; p.textContent = 'Posts you create will appear here. This preview doesn’t save posts yet.';
+  const c = document.createElement('a'); c.className = 'btn'; c.href = 'create-post.html'; c.textContent = 'Create your first post'; c.style.cssText = 'text-decoration:none;display:inline-flex;align-items:center';
+  empty.append(h, p, c); g.append(empty);
+  const ab = $('about'); ab.innerHTML = '';
+  const head = (t, gap) => { const e = document.createElement('h2'); e.textContent = t; if (gap) e.style.marginTop = '28px'; ab.append(e); };
+  const list = (items, cls) => { const ul = document.createElement('ul'); if (cls) ul.className = cls; items.forEach(i => { const li = document.createElement('li'); li.textContent = i; ul.append(li); }); ab.append(ul); };
+  if (my.interests && my.interests.length){ head('Interests'); list(my.interests, 'chips'); }
+  if (my.goals && my.goals.length){ head('Here to', true); list(my.goals); }
+  const n = document.createElement('p'); n.style.cssText = 'margin-top:28px;font-size:14px;color:var(--muted)'; n.textContent = 'Social Design shares general wellness information. It isn’t medical advice.'; ab.append(n);
+})();
 </script>
 </body>
 </html>

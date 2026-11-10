@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feed | Social Design</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F5F8F3; --surface:#FFFFFF; --ink:#16251F; --muted:#586861; --line:#D6E0D9;
+  --brand:#1E7A5A; --coral:#F28B6B; --sun:#F6C85F; --sage:#A8D8BC; --err:#B3261E;
+  --on-brand:#FFFFFF; --tint:#E6F3EC;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15;--err:#FF8A80;--tint:#1B3A2E}
+}
+:root[data-theme="dark"]{--bg:#0E1A15;--surface:#16261F;--ink:#EAF3EE;--muted:#9FB3A9;--line:#27403A;--brand:#5FD1A0;--on-brand:#0E1A15;--err:#FF8A80;--tint:#1B3A2E}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+a{color:var(--brand);font-weight:500}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+nav{background:var(--surface);border-bottom:1.5px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif;color:var(--ink);text-decoration:none}
+.links{display:flex;gap:20px;align-items:center}
+.links a{color:var(--muted);text-decoration:none}
+.links a[aria-current]{color:var(--ink);font-weight:700}
+
+.layout{display:grid;grid-template-columns:minmax(0,640px) 1fr;gap:28px;padding:24px 0 64px;justify-content:center}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--brand);border-radius:10px;background:var(--brand);color:var(--on-brand);font:700 14px "DM Sans",sans-serif;padding:8px 16px;min-height:44px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn[aria-pressed=true]{background:transparent;color:var(--brand)}
+
+.share{display:flex;gap:12px;align-items:center;padding:14px 16px;margin-bottom:16px}
+.av{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:800 15px "Bricolage Grotesque",sans-serif;color:#16251F}
+.share a.fake{flex:1;min-height:44px;display:flex;align-items:center;padding:0 16px;background:var(--bg);border:1.5px solid var(--line);border-radius:99px;color:var(--muted);text-decoration:none;font-weight:400}
+
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--line);margin-bottom:14px}
+.tab{border:0;background:transparent;color:var(--muted);font:500 16px "DM Sans",sans-serif;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;min-height:44px}
+.tab[aria-selected=true]{color:var(--ink);font-weight:700;border-bottom-color:var(--brand)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:thin}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;font:500 15px "DM Sans",sans-serif;padding:8px 16px;cursor:pointer;min-height:44px}
+.chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:var(--on-brand);font-weight:700}
+.status{color:var(--muted);font-size:14px;margin:0 0 12px;min-height:21px}
+
+.post{margin-bottom:16px;overflow:hidden}
+.ph{display:flex;gap:12px;align-items:center;padding:14px 16px 8px}
+.au{color:inherit;text-decoration:none}
+.au:hover{text-decoration:underline}
+.ph .who{flex:1;min-width:0}
+.ph b{display:block;line-height:1.25}
+.ph small{color:var(--muted)}
+.cat{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--brand);border:1.5px solid var(--brand);border-radius:99px;padding:1px 9px;margin:0 16px 8px}
+.txt{padding:0 16px 12px;margin:0;white-space:pre-wrap}
+.media{position:relative;height:260px;overflow:hidden}
+.media i{position:absolute;display:block}
+.v0 .p{width:150px;height:150px;border-radius:50%;right:12%;top:18%}
+.v0 .q{width:110px;height:170px;left:10%;bottom:0;border-radius:110px 110px 0 0}
+.v1 .p{width:220px;height:220px;border-radius:220px 0 0 0;right:0;bottom:0}
+.v1 .q{width:90px;height:90px;border-radius:50%;left:12%;top:16%}
+.v2 .p{width:130px;height:130px;border-radius:50%;border:22px solid;left:12%;top:16%}
+.v2 .q{width:170px;height:110px;right:0;bottom:0;border-radius:110px 0 0 0}
+.playbadge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(22,37,31,.78);display:grid;place-items:center}
+.playbadge svg{width:28px;height:28px;color:#fff}
+.dur{position:absolute;right:12px;bottom:12px;background:rgba(22,37,31,.78);color:#fff;font-size:13px;font-weight:700;border-radius:6px;padding:2px 8px}
+.audio{display:flex;align-items:center;gap:12px;margin:0 16px 12px;padding:12px 14px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px}
+.audio .pb{flex:none;width:44px;height:44px;border-radius:50%;background:var(--brand);color:var(--on-brand);display:grid;place-items:center}
+.audio .pb svg{width:20px;height:20px}
+.wave{flex:1;display:flex;align-items:center;gap:3px;height:36px}
+.wave b{flex:1;background:var(--sage);border-radius:2px;min-width:2px}
+.audio small{color:var(--muted);font-weight:700;white-space:nowrap}
+.reacts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 12px 4px;border-top:1.5px solid var(--line)}
+.rx{--c:var(--coral);display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;font:500 14px "DM Sans",sans-serif;cursor:pointer;padding:6px 8px}
+.rx.vibe{--c:#D99A1B}
+.rx.practice{--c:var(--brand)}
+.rx svg{width:20px;height:20px;color:var(--c);flex:none}
+.rx .n{font-weight:700}
+.rx:hover{border-color:var(--c)}
+.rx[aria-pressed=true]{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.rx.like[aria-pressed=true] svg,.rx.vibe[aria-pressed=true] svg{fill:currentColor}
+.acts{display:flex;gap:4px;padding:4px 8px 8px;flex-wrap:wrap}
+.act{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--muted);font:500 14px "DM Sans",sans-serif;padding:8px 12px;min-height:44px;border-radius:8px;cursor:pointer}
+.act:hover{background:var(--bg)}
+.act svg{width:20px;height:20px}
+.act.save[aria-pressed=true]{color:var(--brand)}
+.act.save[aria-pressed=true] svg{fill:currentColor}
+.sp{flex:1}
+.comments{border-top:1.5px solid var(--line);padding:12px 16px;display:none}
+.comments.open{display:block}
+.cm{margin:0 0 10px;font-size:15px}
+.cm b{font-weight:700}
+.cf{display:flex;gap:8px}
+.cf input{flex:1;min-width:0;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;font:inherit;padding:10px 12px;min-height:44px}
+.empty{display:none;text-align:center;padding:36px 20px;color:var(--muted)}
+.empty h3{font:800 22px "Bricolage Grotesque",sans-serif;color:var(--ink);margin-bottom:6px}
+
+aside .card{padding:16px;margin-bottom:16px}
+aside h2{font-size:20px;font-weight:800;margin-bottom:12px}
+.sug{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.sug .who{flex:1;min-width:0;line-height:1.3}
+.sug small{color:var(--muted);display:block}
+.note{font-size:14px;color:var(--muted);background:var(--tint);border-radius:10px;padding:12px 14px;margin:0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}aside{display:none}}
+@media (max-width:600px){.links .hide-sm{display:none}.media{height:220px}.links{gap:14px}.reacts{gap:6px;padding:12px 10px 4px}.rx{gap:4px;padding:6px 4px;font-size:13px}.rx svg{width:18px;height:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Shared menu: bottom tab bar on phones */
+.tabbar{display:none}
+@media (max-width:700px){
+  nav .links{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1.5px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;color:var(--muted);text-decoration:none;font:500 11px "DM Sans",system-ui,sans-serif}
+  .tabbar a[aria-current]{color:var(--brand);font-weight:700}
+  .tabbar svg{width:24px;height:24px}
+  .tabbar .plus{display:grid;place-items:center;width:44px;height:32px;border-radius:12px;background:var(--brand);color:var(--on-brand)}
+  .tabbar .plus svg{width:22px;height:22px}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:calc(88px + env(safe-area-inset-bottom,0px)) !important}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="logo" href="feed.html">Social Design</a>
+    <div class="links">
+      <a href="feed.html" aria-current="page">Feed</a>
+      <a href="search.html">Search</a>
+      <a href="shop.html">Shop</a>
+      <a href="create-post.html">Create</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="layout">
+    <section aria-label="Feed">
+      <div class="card share">
+        <span class="av" style="background:#A8D8BC" aria-hidden="true">YOU</span>
+        <a class="fake" href="create-post.html">What would you like to share?</a>
+        <a class="btn ghost" href="create-post.html">Post</a>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Feed view">
+        <button class="tab" role="tab" id="t-all" aria-selected="true">For you</button>
+        <button class="tab" role="tab" id="t-fol" aria-selected="false">Following</button>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter by topic"></div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <div id="list"></div>
+      <div class="card empty" id="empty">
+        <h3 id="eh">Nothing here yet</h3>
+        <p id="ep" style="margin:0"></p>
+      </div>
+    </section>
+
+    <aside aria-label="Suggestions">
+      <div class="card">
+        <h2>Coaches to follow</h2>
+        <div id="sug"></div>
+      </div>
+      <div class="card">
+        <h2>Share your knowledge</h2>
+        <p style="margin:0 0 12px;color:var(--muted)">Coaches can post tips, photos, videos and voice notes.</p>
+        <a class="btn" href="create-post.html">Create a post</a>
+      </div>
+      <p class="note">Social Design shares general wellness information. It isn’t medical advice and doesn’t replace a doctor.</p>
+    </aside>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<div class="tabbar" role="navigation" aria-label="Main">
+  <a href="feed.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Feed</span></a>
+  <a href="search.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Search</span></a>
+  <a href="create-post.html"><span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>Create</span></a>
+  <a href="shop.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Shop</span></a>
+  <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profile</span></a>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const ico = {
+  heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+  mark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v14"/></svg>',
+  vibe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>',
+  prac: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16 9.5"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>'
+};
+
+// Sample coaches and posts (replace with real data once there is a backend)
+const coaches = {
+  'Maya Rao':    {role: 'Nutrition and lifestyle coach', color: '#F6C85F', ini: 'MR'},
+  'Arjun Mehta': {role: 'Strength and conditioning coach', color: '#F28B6B', ini: 'AM'},
+  'Lena Park':   {role: 'Yoga and mindfulness teacher', color: '#A8D8BC', ini: 'LP'},
+  'Omar Haddad': {role: 'Running coach', color: '#F6C85F', ini: 'OH'},
+  'Sofia Reyes': {role: 'Sleep and stress coach', color: '#F28B6B', ini: 'SR'},
+  'Kenji Sato':  {role: 'Mental wellness coach', color: '#A8D8BC', ini: 'KS'}
+};
+const posts = [
+  {id:1, who:'Maya Rao', time:'2h', cat:'Nutrition', text:'Sunday meal prep in 45 minutes.\n\nCook one grain, one protein and two vegetables, then mix and match all week. Which one would you start with?', media:{t:'image', bg:'#1E7A5A', a:'#F28B6B', b:'#F6C85F', v:0}, likes:128, comments:[{w:'Omar Haddad', t:'Doing this every Sunday. Saves so much time.'}]},
+  {id:2, who:'Lena Park', time:'4h', cat:'Yoga and mindfulness', text:'A gentle 10-minute morning flow for stiff shoulders. No equipment needed, just a little space and a few slow breaths.', media:{t:'video', bg:'#A8D8BC', a:'#1E7A5A', b:'#F6C85F', v:1, dur:'10:12'}, likes:96, comments:[]},
+  {id:3, who:'Sofia Reyes', time:'6h', cat:'Sleep', text:'Tonight’s 3-minute wind-down: dim the lights, put your phone in another room, and let your breathing slow down. Press play and listen.', media:{t:'audio', dur:'3:05'}, likes:74, comments:[{w:'Kenji Sato', t:'Love this. Sharing it with my clients.'}]},
+  {id:4, who:'Arjun Mehta', time:'9h', cat:'Fitness', text:'Beginner strength: week one.\n\nThree full-body sessions, 30 minutes each. Form first, weight later. Start lighter than you think you need.', media:{t:'image', bg:'#F6C85F', a:'#1E7A5A', b:'#F28B6B', v:2}, likes:152, comments:[]},
+  {id:5, who:'Kenji Sato', time:'1d', cat:'Mental wellness', text:'Try the 5-4-3-2-1 grounding exercise when your mind is racing: name 5 things you see, 4 you feel, 3 you hear, 2 you smell and 1 you taste.', media:null, likes:211, comments:[{w:'Lena Park', t:'A favourite of mine. Simple and it works.'}]},
+  {id:6, who:'Omar Haddad', time:'1d', cat:'Fitness', text:'Your first 5K, step by step. Alternate walking and jogging, and add one minute of jogging each week.', media:{t:'image', bg:'#A8D8BC', a:'#16251F', b:'#F6C85F', v:0}, likes:88, comments:[]},
+  {id:7, who:'Maya Rao', time:'2d', cat:'Habits', text:'Habit tip: attach a new habit to one you already have. A glass of water right after brushing your teeth is an easy start.', media:null, likes:176, comments:[]},
+  {id:8, who:'Lena Park', time:'3d', cat:'Yoga and mindfulness', text:'Two minutes of mindful breathing between meetings can change the rest of your day. Here’s a simple guide.', media:{t:'audio', dur:'2:10'}, likes:64, comments:[]}
+];
+const extra = {1:[34,21], 2:[41,18], 3:[52,27], 4:[22,45], 5:[67,30], 6:[15,33], 7:[48,61], 8:[26,14]};
+posts.forEach(p => { [p.vibes, p.practices] = extra[p.id]; });
+const tips = {like: 'Like this post', vibe: 'Vibe: this speaks to me', practice: 'Practice: I tried it, or I will'};
+const cats = ['All', 'Nutrition', 'Fitness', 'Sleep', 'Mental wellness', 'Yoga and mindfulness', 'Habits'];
+
+const state = {tab: 'all', cat: 'All', following: new Set(['Lena Park', 'Kenji Sato']), liked: new Set(), vibed: new Set(), practiced: new Set(), saved: new Set(), open: new Set(), added: {}};
+let toastTimer;
+function toast(t){ $('toast').textContent = t; $('toast').classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('on'), 2200); }
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function avatar(name){ const c = coaches[name]; return `<span class="av" style="background:${c.color}" aria-hidden="true">${c.ini}</span>`; }
+function mediaHtml(m, name){
+  if (!m) return '';
+  if (m.t === 'audio'){
+    const bars = [30,60,40,80,55,90,45,70,35,85,50,65,40,75,55,90,30,60,45,70,35,80].map(h => `<b style="height:${h}%"></b>`).join('');
+    return `<div class="audio"><span class="pb">${ico.play}</span><span class="wave" aria-hidden="true">${bars}</span><small>Voice note · ${m.dur}</small></div>`;
+  }
+  const ring = m.v === 2 ? `border-color:${m.a};background:transparent` : `background:${m.a}`;
+  const play = m.t === 'video' ? `<span class="playbadge">${ico.play}</span><span class="dur">${m.dur}</span>` : '';
+  return `<div class="media v${m.v}" style="background:${m.bg}" role="img" aria-label="${m.t === 'video' ? 'Video' : 'Photo'} by ${name}"><i class="p" style="${ring}"></i><i class="q" style="background:${m.b}"></i>${play}</div>`;
+}
+function postHtml(p){
+  const c = coaches[p.who], liked = state.liked.has(p.id), vibed = state.vibed.has(p.id), practiced = state.practiced.has(p.id), saved = state.saved.has(p.id), open = state.open.has(p.id), fol = state.following.has(p.who);
+  const cms = p.comments.concat(state.added[p.id] || []);
+  return `<article class="card post" data-id="${p.id}">
+    <div class="ph">${avatar(p.who)}<div class="who"><b><a class="au" href="profile.html?coach=1">${p.who}</a></b><small>${c.role} · ${p.time}</small></div>
+      <button class="btn ${fol ? 'ghost' : ''}" data-a="follow" data-w="${p.who}" aria-pressed="${fol}">${fol ? 'Following' : 'Follow'}</button></div>
+    <span class="cat">${p.cat}</span>
+    <p class="txt">${esc(p.text)}</p>
+    ${mediaHtml(p.media, p.who)}
+    <div class="reacts" role="group" aria-label="Reactions">
+      <button class="rx like" data-a="like" aria-pressed="${liked}" title="${tips.like}">${ico.heart}<span>Like</span><span class="n">${p.likes + (liked ? 1 : 0)}</span></button>
+      <button class="rx vibe" data-a="vibe" aria-pressed="${vibed}" title="${tips.vibe}">${ico.vibe}<span>Vibe</span><span class="n">${p.vibes + (vibed ? 1 : 0)}</span></button>
+      <button class="rx practice" data-a="practice" aria-pressed="${practiced}" title="${tips.practice}">${ico.prac}<span>Practice</span><span class="n">${p.practices + (practiced ? 1 : 0)}</span></button>
+    </div>
+    <div class="acts">
+      <button class="act" data-a="cm" aria-expanded="${open}" aria-label="Comments">${ico.chat}<span>${cms.length}</span></button>
+      <button class="act" data-a="share" aria-label="Share">${ico.share}</button>
+      <span class="sp"></span>
+      <button class="act" data-a="report">Report</button>
+      <button class="act save" data-a="save" aria-pressed="${saved}" aria-label="Save">${ico.mark}</button>
+    </div>
+    <div class="comments ${open ? 'open' : ''}">
+      ${cms.map(x => `<p class="cm"><b>${esc(x.w)}</b> ${esc(x.t)}</p>`).join('')}
+      <div class="cf"><input type="text" maxlength="200" placeholder="Write a comment" aria-label="Write a comment"><button class="btn" data-a="send">Send</button></div>
+    </div>
+  </article>`;
+}
+
+function render(){
+  $('chips').innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c === state.cat}" data-c="${c}">${c}</button>`).join('');
+  const list = posts.filter(p => (state.cat === 'All' || p.cat === state.cat) && (state.tab === 'all' || state.following.has(p.who)));
+  $('list').innerHTML = list.map(postHtml).join('');
+  $('status').textContent = list.length ? '' : '';
+  const none = !list.length;
+  $('empty').style.display = none ? 'block' : 'none';
+  if (none){
+    if (state.tab === 'fol' && !state.following.size){ $('eh').textContent = 'Follow a few coaches'; $('ep').textContent = 'Their posts will show up here. Switch to For you to find coaches to follow.'; }
+    else { $('eh').textContent = 'No posts in this topic yet'; $('ep').textContent = 'Try another topic, or be the first to share something.'; }
+  }
+  $('sug').innerHTML = Object.keys(coaches).slice(0, 5).map(n => {
+    const f = state.following.has(n);
+    return `<div class="sug">${avatar(n)}<div class="who"><b><a class="au" href="profile.html?coach=1">${n}</a></b><small>${coaches[n].role}</small></div>
+      <button class="btn ${f ? 'ghost' : ''}" data-a="follow" data-w="${n}" aria-pressed="${f}">${f ? 'Following' : 'Follow'}</button></div>`;
+  }).join('');
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-a], .tab, .chip'); if (!t) return;
+  if (t.classList.contains('chip')){ state.cat = t.dataset.c; return render(); }
+  if (t.classList.contains('tab')){
+    state.tab = t.id === 't-fol' ? 'fol' : 'all';
+    $('t-all').setAttribute('aria-selected', state.tab === 'all'); $('t-fol').setAttribute('aria-selected', state.tab === 'fol');
+    return render();
+  }
+  const a = t.dataset.a, post = t.closest('.post'), id = post && +post.dataset.id;
+  if (a === 'follow'){
+    const w = t.dataset.w;
+    if (state.following.has(w)){ state.following.delete(w); toast('Unfollowed ' + w); } else { state.following.add(w); toast('Following ' + w); }
+    return render();
+  }
+  if (a === 'like' || a === 'vibe' || a === 'practice'){
+    const set = {like: state.liked, vibe: state.vibed, practice: state.practiced}[a];
+    const on = !set.has(id); on ? set.add(id) : set.delete(id);
+    if (on && a === 'vibe') toast('Vibe: this post speaks to you');
+    if (on && a === 'practice') toast('Practice: nice, go for it');
+    return keep(post, id);
+  }
+  if (a === 'save'){ const on = !state.saved.has(id); on ? state.saved.add(id) : state.saved.delete(id); toast(on ? 'Saved' : 'Removed from saved'); return keep(post, id); }
+  if (a === 'cm'){ state.open.has(id) ? state.open.delete(id) : state.open.add(id); keep(post, id); const i = $('list').querySelector(`[data-id="${id}"] .cf input`); if (state.open.has(id) && i) i.focus(); return; }
+  if (a === 'share'){ (navigator.clipboard ? navigator.clipboard.writeText(location.href.split('#')[0]) : Promise.reject()).then(() => toast('Link copied'), () => toast('Copy the address from your browser')); return; }
+  if (a === 'report'){ toast('Thanks for reporting. We’ll review this post.'); return; }
+  if (a === 'send'){
+    const input = post.querySelector('.cf input'), v = input.value.trim();
+    if (!v){ toast('Write a comment first'); input.focus(); return; }
+    (state.added[id] = state.added[id] || []).push({w: 'You', t: v});
+    keep(post, id);
+    const again = $('list').querySelector(`[data-id="${id}"] .cf input`); if (again) again.focus();
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.matches('.cf input')){ e.preventDefault(); e.target.closest('.post').querySelector('[data-a="send"]').click(); }
+});
+// Re-draw just one post so the page doesn't jump
+function keep(post, id){
+  const p = posts.find(x => x.id === id), tmp = document.createElement('div');
+  tmp.innerHTML = postHtml(p); post.replaceWith(tmp.firstElementChild);
+}
+(function(){ try { const m = JSON.parse(localStorage.getItem('sd-profile') || 'null'); if (m && m.name) document.querySelector('.share .av').textContent = m.name.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase(); } catch (e) {} })();
+render();
+</script>
+</body>
+</html>
